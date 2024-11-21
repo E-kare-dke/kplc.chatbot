@@ -1,0 +1,118 @@
+# Customer Service Bot for KPLC
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPLC Customer Service Bot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        #chatbox {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        #messages {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background: #fafafa;
+        }
+        .message {
+            margin: 10px 0;
+        }
+        .user {
+            text-align: right;
+            color: blue;
+        }
+        .bot {
+            text-align: left;
+            color: green;
+        }
+        #userInput {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #sendButton {
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div id="chatbox">
+    <h2>KPLC Customer Service Bot</h2>
+    <div id="messages"></div>
+    <input type="text" id="userInput" placeholder="Type your message here...">
+    <button id="sendButton">Send</button>
+</div>
+
+<script>
+    const messages = document.getElementById('messages');
+    const userInput = document.getElementById('userInput');
+    const sendButton = document.getElementById('sendButton');
+
+    sendButton.addEventListener('click', function() {
+        const userMessage = userInput.value;
+        if (userMessage) {
+            addMessage(userMessage, 'user');
+            userInput.value = '';
+            setTimeout(() => {
+                const botResponse = getBotResponse(userMessage);
+                addMessage(botResponse, 'bot');
+            }, 1000);
+        }
+    });
+
+    function addMessage(message, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', sender);
+        messageDiv.textContent = message;
+        messages.appendChild(messageDiv);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    function getBotResponse(input) {
+        const responses = {
+            "hello": "Hello! How can I assist you today?",
+            "billing": "You can check your billing status on our website.",
+            "outage": "Please report any outages through our customer service line.",
+            "help": "What do you need help with?",
+            "account balance": "To check your account balance, visit our self-service portal or dial *977#.",
+            "faulty meter": "To report a faulty meter, please contact our technical support at 0800-000-000.",
+            "new connection": "For a new connection, visit your nearest KPLC office or apply online through our website.",
+            "process of token purchase": "Access the Safaricom menu on your phone screen. Go to Mpesa, and select Lipa na Mpesa. Use the pay bill option and enter the business number 888880. Enter the meter number and follow the Mpesa prompts after that. A token purchase message pops up from Safaricom with the token number.",
+            "update token meter yako": "Update token meter yako is necessary to prevent service disruptions. It is a process that updates software in a prepaid meter to reset the software.",
+            "top up prepaid meter": "Enter the token number and then press enter for an Actaris meter, or press # or enter for a Hexing meter.",
+            "purchase a token": "Go to the Safaricom menu, select Lipa na Mpesa, use the pay bill option, enter the business number 888880, enter the meter number, and follow the prompts.",
+            "report a power disconnection": "Dial *977#, select 'report incidences', select 'power outage', and follow the instructions.",
+            "reconnect power": "Visit your nearest Kenya Power office with your ID or passport.",
+            "report a billing complaint": "Dial *977#, select 'billing complaints', and select the applicable options.",
+            "contact kenya power": "You can contact Kenya Power by calling the national contact center and customer experience at 97771, 0703070707, or 0732170170. You can also email customercare@kplc.co.ke or contact them on Facebook or Twitter.",
+            "default": "I'm sorry, I didn't understand that. Can you please rephrase?"
+        };
+        return responses[input.toLowerCase()] || responses["default"];
+    }
+</script>
+
+</body>
+</html>
